@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         setupViews()
         setupListeners()
-        progressBar?.visibility = View.VISIBLE
     }
 
     private fun setupViews() {
@@ -57,9 +56,8 @@ class MainActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(imageToDownload)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(imageView)
-
-            progressBar?.visibility = View.INVISIBLE
         }
 
         // Setting the BItmap into the Wallpaper
@@ -78,7 +76,12 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        imageView?.setImageDrawable(null)
+        progressBar?.visibility = View.INVISIBLE
     }
 }
